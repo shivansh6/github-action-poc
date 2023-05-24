@@ -11,7 +11,8 @@ on:
 
 jobs:
   build:
-
+    env:
+      Key1: "This is temp env"
     runs-on: ubuntu-latest
 
     steps:
