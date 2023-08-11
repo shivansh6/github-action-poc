@@ -42,6 +42,10 @@ jobs:
       uses: medyagh/setup-minikube@master
     - name: Try the cluster !
       run: kubectl get pods -A   
+    - name: Create deployment
+      run: kubectl apply -f deployment.yaml
+    - name: Create service
+      run: kubectl apply -f service.yaml
     - name: Deploy to minikube
       run:
         kubectl apply -f minikube-deployment.yaml
