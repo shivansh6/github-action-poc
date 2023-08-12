@@ -43,9 +43,11 @@ jobs:
     - name: Try the cluster !
       run: kubectl get pods -A   
     - name: Deploy to minikube
-      run:
+      run: |
+        minikube status
         kubectl apply -f minikube-deployment.yaml
     - name: Test service URLs
       run: |
+          minikube status
           minikube service list
           minikube service github-action-poc
