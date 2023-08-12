@@ -39,7 +39,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Start minikube
-      uses: medyagh/setup-minikube@master
+      uses: azure/setup-minikube@v1
     - name: Try the cluster !
       run: kubectl get pods -A   
     - name: Deploy to minikube
@@ -49,14 +49,18 @@ jobs:
     - name: Wait for service to become available
       run: |
         retries=0
-        max_retries=20
+        max_retries=5
         while [ $retries -lt $max_retries ]; do
           if kubectl get svc github-action-poc -o jsonpath='{.status.loadBalancer.ingress[0].ip}' | grep -qE '\d+\.\d+\.\d+\.\d+'; then
             break
           else
             retries=$((retries + 1))
             echo "Waiting for service to become available..."
-            sleep 30
+            kubectl get pods
+            kubectl get services
+            kubectl get deployments
+            kubectl get endpoints
+            sleep 10
           fi
         done
     - name: Test service URLs
