@@ -49,5 +49,9 @@ jobs:
     - name: Test service URLs
       run: |
           minikube status
+          kubectl get pods
+          kubectl get services
+          kubectl get deployments
+          minikube get pods
           minikube service list
           minikube service github-action-poc
