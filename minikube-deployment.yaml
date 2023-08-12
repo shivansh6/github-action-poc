@@ -13,6 +13,10 @@ spec:
       labels:
         app: ga1
     spec:
+      initContainers:
+        - name: wait-for-pod
+          image: busybox
+          command: ['sh', '-c', 'until kubectl get pod -l app=my-app -o jsonpath="{.items[0].status.phase}" | grep -q Running; do sleep 1; done']
       containers:
         - name: githubaction
           image: stdnoob/github-action-poc:latest
