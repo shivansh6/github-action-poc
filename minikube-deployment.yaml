@@ -25,7 +25,7 @@ metadata:
   name: github-action-poc
 spec:
   selector:
-    app: g1
+    app: ga1
   ports:
     - protocol: TCP
       port: 8080
