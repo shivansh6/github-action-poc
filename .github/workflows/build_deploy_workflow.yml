@@ -52,6 +52,6 @@ jobs:
           kubectl get pods
           kubectl get services
           kubectl get deployments
-          minikube get pods
+          kubectl get endpoints
           minikube service list
-          minikube service github-action-poc
+          minikube service github-action-poc --url
