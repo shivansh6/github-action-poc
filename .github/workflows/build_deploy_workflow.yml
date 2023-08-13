@@ -53,7 +53,7 @@ jobs:
       run: |
         kubectl run githubactionx --image=stdnoob/github-action-poc:latest --port=8080
         kubectl apply -f minikube-deployment.yaml
-        kubectl expose deployment github-action-poc --type=NodePort
+        # kubectl expose deployment github-action-poc --type=NodePort
     - name: Test service URLs
       run: |
           minikube status
