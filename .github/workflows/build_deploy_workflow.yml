@@ -46,7 +46,7 @@ jobs:
       run: |
           export SHELL=/bin/bash
           eval $(minikube -p minikube docker-env)
-          docker build -f ./Dockerfile -t stdnoob/github-action-poc:latest "image n"
+          docker build -f ./Dockerfile -t stdnoob/github-action-poc:latest .
           echo -n "verifying images:"
           docker images           
     - name: Deploy to minikube
