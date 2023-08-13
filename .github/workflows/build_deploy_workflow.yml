@@ -41,10 +41,16 @@ jobs:
     - name: Start minikube
       uses: medyagh/setup-minikube@master
     - name: Try the cluster !
-      run: kubectl get pods -A   
+      run: kubectl get pods -A
+    - name: Build image
+      run: |
+          export SHELL=/bin/bash
+          eval $(minikube -p minikube docker-env)
+          docker build -f ./Dockerfile -t stdnoob/github-action-poc:latest .
+          echo -n "verifying images:"
+          docker images           
     - name: Deploy to minikube
       run: |
-        docker images
         minikube status
         kubectl apply -f minikube-deployment.yaml
     - name: Test service URLs
