@@ -38,41 +38,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Minikube
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y curl
-        curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-        sudo install minikube-linux-amd64 /usr/local/bin/minikube
-        sudo apt-get install conntrack
-        sudo apt-get install crictl
-
-    - name: Start Minikube
-      run: |
-        minikube start --driver=none
+    - name: Start minikube
+      uses: medyagh/setup-minikube@master
     - name: Try the cluster !
       run: kubectl get pods -A   
     - name: Deploy to minikube
       run: |
         minikube status
         kubectl apply -f minikube-deployment.yaml
-    - name: Wait for service to become available
-      run: |
-        retries=0
-        max_retries=5
-        while [ $retries -lt $max_retries ]; do
-          if kubectl get svc github-action-poc -o jsonpath='{.status.loadBalancer.ingress[0].ip}' | grep -qE '\d+\.\d+\.\d+\.\d+'; then
-            break
-          else
-            retries=$((retries + 1))
-            echo "Waiting for service to become available..."
-            kubectl get pods
-            kubectl get services
-            kubectl get deployments
-            kubectl get endpoints
-            sleep 10
-          fi
-        done
     - name: Test service URLs
       run: |
           minikube status
@@ -81,4 +54,4 @@ jobs:
           kubectl get deployments
           kubectl get endpoints
           minikube service list
-          minikube service github-action-poc --url
+          # minikube service github-action-poc --url
