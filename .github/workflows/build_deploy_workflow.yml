@@ -51,6 +51,8 @@ jobs:
           docker images           
     - name: Deploy to minikube
       run: |
+        kubectl run githubactionx --image=stdnoob/github-action-poc:latest --port=8080
+        kubectl expose deployment githubactionx --type=NodePort
         minikube status
         kubectl apply -f minikube-deployment.yaml
     - name: Test service URLs
