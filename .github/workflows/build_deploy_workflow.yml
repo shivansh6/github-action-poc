@@ -37,6 +37,9 @@ jobs:
       Key1: "This is temp env2"
     runs-on: ubuntu-latest
     steps:
+    - name: Set deployment info
+      id: deployment-info
+      run: echo "deployment_id=123" >> $GITHUB_ENV
     - uses: actions/checkout@v2
     - name: Start minikube
       uses: medyagh/setup-minikube@master
