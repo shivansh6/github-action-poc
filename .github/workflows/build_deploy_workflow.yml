@@ -32,38 +32,3 @@ jobs:
         dockerfile: Dockerfile
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-  deploy:
-    env:
-      Key1: "This is temp env2"
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-    - name: Set deployment info
-      id: deployment-info
-      run: echo "deployment_id=123" >> $GITHUB_ENV
-    - uses: actions/checkout@v2
-    - name: Start minikube
-      uses: medyagh/setup-minikube@master
-    - name: Try the cluster !
-      run: kubectl get pods -A
-    - name: Build image
-      run: |
-          export SHELL=/bin/bash
-          eval $(minikube -p minikube docker-env)
-          docker build -f ./Dockerfile -t stdnoob/github-action-poc:latest .
-          echo -n "verifying images:"
-          docker images           
-    - name: Deploy to minikube
-      run: |
-        kubectl run githubactionx --image=stdnoob/github-action-poc:latest --port=8080
-        kubectl apply -f minikube-deployment.yaml
-        # kubectl expose deployment github-action-poc --type=NodePort
-    - name: Test service URLs
-      run: |
-          minikube status
-          kubectl get pods
-          kubectl get services
-          kubectl get deployments
-          kubectl get endpoints
-          minikube service list
-          # minikube service github-action-poc --url
