@@ -10,6 +10,7 @@ jobs:
   build:
     env:
       Key1: "This is temp env1"
+      artifact: "Docker Image"
       var_image: "stdnoob/github-action-poc"
       var_tags: "latest"
       var_registry: "docker.io"
