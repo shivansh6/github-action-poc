@@ -2,9 +2,9 @@ name: project cicd flow
 
 on:
   push:
-    branches: [ master ]
+    branches: [ basahota-patch-1 ]
   pull_request:
-    branches: [ master ]
+    branches: [ basahota-patch-1 ]
 
 jobs:
   build:
